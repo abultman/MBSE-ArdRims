@@ -158,7 +158,7 @@ void Prompt(int Pmpt) {
   } else if ((Pmpt >= 200) && (Pmpt < 300)) {
     lcd.setCursor(1, 1);
   } else if ((Pmpt >= 300) && (Pmpt < 400)) {
-    lcd.setCursor(1, 2);
+    lcd.setCursor(0, 2);
   } else if ((Pmpt >= 400) && (Pmpt < 500)) {
     lcd.setCursor(0, 3);
   }
@@ -290,7 +290,7 @@ void Prompt(int Pmpt) {
 
 
     case P2_clear:
-      LCDSpace(18);
+      LCDSpace(20);
       return;
     case P2_malt_add:
 #if langNL == true
