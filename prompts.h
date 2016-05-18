@@ -71,14 +71,14 @@
 
 
 #if langNL == true
-const char *stageName[] = { "Maisch in ",
+const char *stageName[] = { "Maisch In ",
                             "Maisch #1 ",
                             "Maisch #2 ",
                             "Maisch #3 ",
                             "Maisch #4 ",
                             "Maisch #5 ",
                             "Maisch #6 ",
-                            "Maisch uit",
+                            "Maisch Uit",
                             "Koken     ",
                             "Koelen    ",
                             "Whirlpool ",
@@ -87,14 +87,14 @@ const char *stageName[] = { "Maisch in ",
                             "Whirlpool "
                           };
 #else
-const char *stageName[] = { "Mash in   ",
+const char *stageName[] = { "Mash In   ",
                             "Mash #1   ",
                             "Mash #2   ",
                             "Mash #3   ",
                             "Mash #4   ",
                             "Mash #5   ",
                             "Mash #6   ",
-                            "Mash out  ",
+                            "Mash Out  ",
                             "Boil      ",
                             "Cooling   ",
                             "Whirlpool ",
@@ -172,7 +172,7 @@ void Prompt(int Pmpt) {
       return;
     case P0_manual:
 #if langNL == true
-      lcd.print(F("   HAND BEDIENING   "));
+      lcd.print(F("   HANDBEDIENING    "));
 #else
       lcd.print(F("    MANUAL  MODE    "));
 #endif
@@ -267,7 +267,7 @@ void Prompt(int Pmpt) {
       return;
     case P1_prime:
 #if langNL == true
-      lcd.print(F(" Pomp  ontluchten "));
+      lcd.print(F(" Pomp ontluchten  "));
 #else
       lcd.print(F("    Pump Prime    "));
 #endif
