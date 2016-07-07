@@ -34,6 +34,9 @@
 // Nederlands.
 #define langNL          true
 
+// Prime the pump?
+#define PumpPrime       false
+
 // Don not change this next block
 #if FakeHeating == true
 #define USE_DS18020     false
@@ -546,20 +549,29 @@ void bk_heat_hide() {
 #endif
 }
 
-
+boolean pumpOn = false;
 /*
    Pump control.
 */
 void pump_on() {
-  digitalWrite(PumpControlPin, HIGH);
+  if (!pumpOn) {
+    digitalWrite(PumpControlPin, HIGH);
+  }
+  pumpOn = true;
   LCDChar(19, 2, 4);
 }
 void pump_off() {
-  digitalWrite(PumpControlPin, LOW);
+  if (pumpOn) {
+    digitalWrite(PumpControlPin, LOW);
+  }
+  pumpOn = false;
   LCDChar(19, 2, 3);
 }
 void pump_hide() {
-  digitalWrite(PumpControlPin, LOW);
+  if (pumpOn) {
+    digitalWrite(PumpControlPin, LOW);
+  }
+  pumpOn = false;
   LCDChar(19, 2, 32);
 }
 
@@ -1062,7 +1074,8 @@ startover:
           break;
 
         case StagePrepare:
-          /*
+#if PumpPrime == true
+/*
              Pump Prime
           */
           Prompt(P1_prime);
@@ -1073,6 +1086,7 @@ startover:
             delay(350);
           }
           pump_hide();
+#endif         
           ew_byte(EM_AutoModeStarted, 1);
           Setpoint = (word(er_byte(EM_StageTemp(0)), er_byte(EM_StageTemp(0) + 1)) / 16.0) - 10.0; // 10 below Mash-in
           lcd.clear();
