@@ -22,6 +22,7 @@
 #define  P1_twhirl       207
 #define  P1_prime        208
 #define  P1_resume       209
+#define  P1_delayStart   210
 
 #define  P2_clear        300
 #define  P2_malt_add     301
@@ -279,6 +280,15 @@ void Prompt(int Pmpt) {
 #endif
       return;
 
+    case P1_delayStart:
+#if langNL == true
+      lcd.print(F("Start uitstellen? "));
+#else
+      lcd.print(F("   Delay start?   "));
+#endif
+      return;
+
+
     case P2_clear:
       LCDSpace(18);
       return;
@@ -530,7 +540,6 @@ boolean PromptForMashWater(boolean Mash) {
       return false;
   }
 }
-
 
 /*
  * Wait for confirm

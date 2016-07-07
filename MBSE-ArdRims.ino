@@ -14,7 +14,7 @@
 // 4 Protoduino NANO by J. Klinge
 // 5 ArdRims NANO by C. Broek
 // 6 ArduinoBrewboard by J. Klinge ?? 2 soorten ??
-#define PCBType 5
+#define PCBType 6
 
 // should be false
 #define FakeHeating     false       // For development only.
@@ -817,6 +817,37 @@ void manual_mode() {
 }
 
 
+void MaybeDelayedStart() {
+  Prompt(P1_delayStart);
+  Prompt(P3_QQxO);
+  int ttw = 0;
+  while (true) {
+    ReadButton(Direction, Timer);
+    lcd.setCursor(13, 2);
+    displayTime(ttw);
+    Set(ttw, 1440, 0, 1, Timer, Direction);
+    if (btn_Press(ButtonEnterPin, 50))
+      break;    
+  }
+
+  if (ttw > 0) {
+    Prompt(P1_resume);
+    Prompt(P3_xxxO);
+    TimerSet((unsigned long)ttw * 60L);
+    while(TimeLeft > 0) {
+      if (btn_Press(ButtonEnterPin, 50)) {
+        TimerSet(0);
+        break;
+      }
+      TimerRun();
+      TimerShow(TimeLeft, 6, 2);
+      delay(50);
+    }
+  }
+
+}
+
+
 
 /*
    Automatic brew control
@@ -1395,6 +1426,9 @@ startover:
           NewState = StageAborted;
           break;
         }
+
+        MaybeDelayedStart();
+        
 #if USE_HLT == true
         HLT_SetPoint = er_byte(EM_TempHLT);
         if (HLT_SetPoint && ! PromptForMashWater(false)) {
